@@ -82,9 +82,9 @@ class Products with ChangeNotifier {
           'https://e-store-61d50-default-rtdb.firebaseio.com/userFavorites/$userId.json?auth=$authToken';
       final favoriteResponse = await http.get(url);
       final favoriteData = json.decode(favoriteResponse.body);
-      final List<Product> loadedProduct = [];
+      final List<Product> loadedProducts = [];
       extractedData.forEach((prodId, prodData) {
-        loadedProduct.add(
+        loadedProducts.add(
           Product(
             id: prodId,
             title: prodData['title'],
@@ -96,7 +96,7 @@ class Products with ChangeNotifier {
           ),
         );
       });
-      _items = loadedProduct;
+      _items = loadedProducts;
       notifyListeners();
     } catch (error) {
       throw error;

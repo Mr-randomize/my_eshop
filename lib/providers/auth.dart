@@ -57,7 +57,12 @@ class Auth with ChangeNotifier {
       notifyListeners();
       final prefs = await SharedPreferences.getInstance();
       final userData = json.encode(
-          {'token': _token, 'userId': _userId, 'expiryDate': _expiryDate});
+        {
+          'token': _token,
+          'userId': _userId,
+          'expiryDate': _expiryDate.toIso8601String(),
+        },
+      );
       prefs.setString('userData', userData);
     } catch (error) {
       throw error;
@@ -94,7 +99,7 @@ class Auth with ChangeNotifier {
   Future<void> logout() async {
     _token = null;
     _userId = null;
-    _userId = null;
+    _expiryDate = null;
     if (_authTimer != null) {
       _authTimer.cancel();
       _authTimer = null;
